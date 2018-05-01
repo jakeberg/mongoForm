@@ -1,0 +1,14 @@
+doctype html
+html
+    head
+    body
+        h1= header
+        form(id="form")
+            input(type="text", id="name", name="name", value='name')
+            input(type='text', id="email", name="email", value="email")
+            input(type="radio", name="going", value="I'll be there!")
+            input(type="radio", name="notgoing", value="I can't make it")
+            input(type="submit", id="submit", value="Respond", name="submit")
+            //- enctype="multipart/form-data"
+            //- action="/reply" method="post"
+        script(src="client.js")
