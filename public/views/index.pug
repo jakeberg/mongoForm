@@ -3,12 +3,28 @@ html
     head
     body
         h1= header
-        form(id="form")
+        form(id="form" method="Post" action="/reply")
             input(type="text", id="name", name="name", value='name')
             input(type='text', id="email", name="email", value="email")
-            input(type="radio", name="going", value="I'll be there!")
-            input(type="radio", name="notgoing", value="I can't make it")
+            br
+            p I'll be there!
+            input(type="radio",id="going", name="attending", value="I'll be there!")
+            br
+            p I can't make it.
+            input(type="radio",id="notGoing" name="attending", value="I can't make it.")
+            br
+            select(id="guestList", name="numberOfGuests")
+                option(value='0', selected= "selected") -- Select --
+                option(value='1') 1
+                option(value='2') 2
+                option(value='3') 3
+                option(value='4') 4
+                option(value='5') 5
+                option(value='6') 6
+                option(value='7') 7
+                option(value='8') 8
+            label           Guests
+            br
             input(type="submit", id="submit", value="Respond", name="submit")
             //- enctype="multipart/form-data"
             //- action="/reply" method="post"
-        script(src="client.js")
