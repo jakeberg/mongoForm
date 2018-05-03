@@ -12,10 +12,15 @@ app.set('views', './public/views')
 const responseSchema = mongoose.Schema({
     user: String,
     userEmail: String,
-    attending: String
+    attending: String,
+    guests: String
 });
 
 const Response = mongoose.model('Response', responseSchema);
+
+let attending = [];
+let notAttending = [];
+let numberAttending = [];
 
 app.get('/', function (req, res) {
     res.statusCode = 200;
@@ -26,23 +31,36 @@ app.get('/', function (req, res) {
 })
 
 app.get('/guest', function (req, res) {
+    
+    Response.find(function (err, going) {
+        if (err) return handleError(err);
+        // console.log(going)
+        // console.log(going.user)
+        for(let reservation of going) {
+            if (reservation.attending == "I'll be there!") {
+                attending.push(reservation.user)
+                numberAttending.push(reservation.guests)
+            } else {
+                notAttending.push(reservation.user)
+            }
+        }
+        res.render('guest', {
+            attending,
+            notAttending,
+            numberAttending
 
-
-// find each person with a last name matching 'Ghost', selecting the `name` and `occupation` fields
-Response.find({}, function (err, going) {
-    if (err) return handleError(err);
-  console.log(responses.name);
-  });
-    res.send()
+        })
+      });
 })
 
 app.post('/reply', function (req, res) {
     res.statusCode = 200;
-    var name = req.body.name
-    var email = req.body.email
-    var going = req.body.attending
+    const name = req.body.name;
+    const email = req.body.email;
+    const going = req.body.attending;
+    const guestCount = req.body.numberOfGuests;
 
-    var userResponse = new Response({user: name, userEmail: email, attending: going})
+    const userResponse = new Response({user: name, userEmail: email, attending: going, guests: guestCount})
 
     userResponse.save(function (err, userResponse) {
         if (err) res.end(err);
