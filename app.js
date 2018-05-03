@@ -4,13 +4,10 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));
 app.set('view engine', 'pug');
 app.set('views', './public/views')
-
-
 
 const responseSchema = mongoose.Schema({
     user: String,
@@ -19,7 +16,6 @@ const responseSchema = mongoose.Schema({
 });
 
 const Response = mongoose.model('Response', responseSchema);
-
 
 app.get('/', function (req, res) {
     res.statusCode = 200;
@@ -33,7 +29,7 @@ app.get('/guest', function (req, res) {
 
 
 // find each person with a last name matching 'Ghost', selecting the `name` and `occupation` fields
-Response.find({ 'attending': "I'll be there!" }, 'name attendanceAnswered', function (err, going) {
+Response.find({}, function (err, going) {
     if (err) return handleError(err);
   console.log(responses.name);
   });
