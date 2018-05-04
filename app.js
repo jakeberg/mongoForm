@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const assert = require('assert');
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));
@@ -68,5 +68,10 @@ app.post('/reply', function (req, res) {
       });
 })
 
-app.listen(port, () => mongoose.connect('mongodb://localhost/rsvp'));
+const DB_USER = "jake";
+const DB_PASSWORD = "19181716";
+const DB_URI = `ds115360.mlab.com:15360`
+const DB_NAME = "rsvp"
+
+app.listen(port, () => mongoose.connect(`mongodb://${DB_USER}:${DB_PASSWORD}@${DB_URI}/${DB_NAME}`));
 
